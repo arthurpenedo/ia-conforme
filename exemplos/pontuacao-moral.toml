@@ -1,0 +1,8 @@
+# Exemplo fictício de prática vedada.
+nome = "pontuacao-moral"
+finalidade = "Dá nota de comportamento a moradores para liberar ou negar benefícios"
+dominio = "servicos_essenciais"
+publico = "publico_geral"
+dados_pessoais = true
+pontuacao_social = true
+decisao = "automatica"

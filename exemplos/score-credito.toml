@@ -1,0 +1,14 @@
+# Exemplo fictício.
+nome = "score-credito"
+finalidade = "Calcula limite de crédito de pessoas físicas com modelo de machine learning"
+dominio = "credito"
+publico = "clientes"
+dados_pessoais = true
+decisao = "apoia"
+supervisao_humana = "antes_da_decisao"
+avaliacao_impacto = true
+registro_decisoes = true
+teste_vies = true
+transparencia_usuario = true
+canal_contestacao = true
+base_legal_lgpd = true

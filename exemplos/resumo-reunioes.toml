@@ -1,0 +1,5 @@
+# Exemplo fictício.
+nome = "resumo-reunioes"
+finalidade = "Resume atas de reuniões internas, sem dado de clientes"
+dominio = "interno"
+publico = "interno"

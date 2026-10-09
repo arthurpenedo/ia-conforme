@@ -1,0 +1,10 @@
+# Exemplo fictício.
+nome = "triagem-curriculos"
+finalidade = "Ranqueia candidatos e descarta automaticamente os abaixo da nota de corte"
+dominio = "emprego"
+publico = "interno"
+dados_pessoais = true
+decisao = "automatica"
+supervisao_humana = "nenhuma"
+registro_decisoes = true
+base_legal_lgpd = true

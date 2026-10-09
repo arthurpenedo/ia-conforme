@@ -1,0 +1,13 @@
+# Preenchido a partir do README do projeto agente-banco (projeto de portfólio, não está em produção).
+nome = "agente-banco"
+finalidade = "Agente de atendimento bancário que consulta saldo, bloqueia cartão, emite segunda via e contesta cobrança via tool calling"
+dominio = "atendimento"
+publico = "clientes"
+dados_pessoais = true
+decisao = "automatica"          # bloqueia cartão e estorna até R$ 100 sem humano
+supervisao_humana = "amostral"  # transfere para humano acima da alçada
+registro_decisoes = true        # cada chamada de ferramenta fica registrada no relatório de avaliação
+teste_vies = false
+transparencia_usuario = false
+canal_contestacao = false
+base_legal_lgpd = false

@@ -1,0 +1,8 @@
+# Preenchido a partir do README do projeto lgpd-guard (projeto de portfólio).
+nome = "lgpd-guard"
+finalidade = "Firewall que troca CPF, cartão e nomes por marcadores antes do texto ir ao provedor de IA"
+dominio = "interno"
+publico = "interno"
+dados_pessoais = true           # processa dado pessoal para protegê-lo
+decisao = "nenhuma"
+base_legal_lgpd = false
