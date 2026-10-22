@@ -37,10 +37,26 @@ def main(argv: list[str] | None = None) -> int:
     a.add_argument("--saida", help="grava o relatório neste arquivo .md")
     a.add_argument("--falhar-se", choices=NIVEIS, help="sai com código 1 se algum sistema atingir este nível ou pior")
     sub.add_parser("modelo", help="imprime uma ficha em branco")
+    d = sub.add_parser("demo", help="gera a página HTML de demo a partir de uma pasta de fichas")
+    d.add_argument("pasta", nargs="?", default="exemplos")
+    d.add_argument("--saida", default="site/index.html")
     args = p.parse_args(argv)
 
     if args.cmd == "modelo":
         print(MODELO, end="")
+        return 0
+
+    if args.cmd == "demo":
+        from .demo import gerar_html
+        try:
+            html = gerar_html(args.pasta)
+        except (FichaInvalida, FileNotFoundError) as e:
+            print(f"erro: {e}", file=sys.stderr)
+            return 2
+        saida = Path(args.saida)
+        saida.parent.mkdir(parents=True, exist_ok=True)
+        saida.write_text(html, encoding="utf-8")
+        print(f"página gravada em {saida}")
         return 0
 
     alvo = Path(args.caminho)

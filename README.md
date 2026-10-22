@@ -52,6 +52,9 @@ ia-conforme avaliar exemplos --saida relatorio.md --falhar-se alto   # código 1
 pytest                                         # 18 testes
 ```
 
+## Página de demo
+`ia-conforme demo exemplos --saida site/index.html` gera uma página estática com o inventário dos sistemas de exemplo (risco, motivos e checklist). O workflow `.github/workflows/pagina.yml` publica no GitHub Pages a cada push na `main` (ativar uma vez em Settings → Pages → Source = GitHub Actions). Link: https://arthurpenedo.github.io/ia-conforme/ (vale depois da primeira execução).
+
 ## Limites honestos
 
 - **É triagem técnica, não parecer jurídico.** As regras são uma leitura simplificada do PL 2338/2023 e do AI Act,
