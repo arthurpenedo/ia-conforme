@@ -49,7 +49,7 @@ pip install -e ".[dev]"
 ia-conforme modelo > minha-ficha.toml          # ficha em branco
 ia-conforme avaliar exemplos                   # imprime o relatório
 ia-conforme avaliar exemplos --saida relatorio.md --falhar-se alto   # código 1 se houver alto risco ou pior
-pytest                                         # 18 testes
+pytest                                         # 21 testes
 ```
 
 ## Página de demo
