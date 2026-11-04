@@ -66,10 +66,10 @@ def test_checklist_alto_cobra_todos_os_controles():
 
 def test_checklist_supervisao_so_vale_antes_da_decisao():
     f = ficha(dominio="credito", decisao="apoia", supervisao_humana="amostral")
-    sup = [i for i in montar(f, "alto") if i.campo == "supervisao_humana"][0]
+    sup = next(i for i in montar(f, "alto") if i.campo == "supervisao_humana")
     assert not sup.ok
     f2 = ficha(dominio="credito", decisao="apoia", supervisao_humana="antes_da_decisao")
-    assert [i for i in montar(f2, "alto") if i.campo == "supervisao_humana"][0].ok
+    assert next(i for i in montar(f2, "alto") if i.campo == "supervisao_humana").ok
 
 
 def test_checklist_vedado_vazio_e_minimo_sem_exigencia():
