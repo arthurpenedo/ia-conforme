@@ -52,6 +52,30 @@ def test_emocoes_no_trabalho_vedado_mas_em_atendimento_limitado():
     assert classificar(ficha(reconhecimento_emocoes=True, dominio="atendimento")).nivel == "limitado"
 
 
+def test_manipulacao_e_vedada():
+    assert classificar(ficha(manipulacao=True)).nivel == "vedado"
+
+
+def test_biometria_so_e_vedada_em_seguranca_publica():
+    assert classificar(ficha(biometria_identificacao=True, dominio="seguranca_publica")).nivel == "vedado"
+    r = classificar(ficha(biometria_identificacao=True, dominio="atendimento"))
+    assert r.nivel == "alto"
+    assert any("biométrica" in m for m in r.motivos)
+
+
+def test_dado_sensivel_ou_crianca_em_decisao_e_alto():
+    assert classificar(ficha(dados_sensiveis=True, decisao="apoia")).nivel == "alto"
+    assert classificar(ficha(criancas=True, dados_pessoais=True, decisao="apoia")).nivel == "alto"
+    # sem decisão, só dado pessoal: continua limitado
+    assert classificar(ficha(criancas=True, dados_pessoais=True)).nivel == "limitado"
+
+
+def test_apoio_a_decisao_sem_dado_pessoal_e_limitado():
+    r = classificar(ficha(decisao="apoia"))
+    assert r.nivel == "limitado"
+    assert any("apoia decisões" in m for m in r.motivos)
+
+
 def test_vedado_vence_alto():
     r = classificar(ficha(manipulacao=True, decisao="automatica", dados_pessoais=True))
     assert r.nivel == "vedado"
