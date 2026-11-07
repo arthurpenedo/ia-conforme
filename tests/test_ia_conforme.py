@@ -127,6 +127,22 @@ def test_exemplos_classificacao_esperada():
     assert len(por_nome["triagem-curriculos"].pendencias) == 5
 
 
+def test_toml_quebrado_cita_o_arquivo(tmp_path):
+    from ia_conforme.ficha import carregar
+
+    arq = tmp_path / "quebrada.toml"
+    arq.write_text('nome = "x\nfinalidade = ', encoding="utf-8")
+    with pytest.raises(FichaInvalida, match=r"quebrada\.toml: TOML inválido"):
+        carregar(arq)
+
+
+def test_cli_modelo_imprime_ficha_em_branco(capsys):
+    from ia_conforme.cli import MODELO
+
+    assert main(["modelo"]) == 0
+    assert capsys.readouterr().out == MODELO
+
+
 def test_ordenacao_pior_primeiro():
     ordem = [a.ficha.nome for a in avaliar_todas(carregar_pasta(EXEMPLOS))]
     assert ordem[0] == "pontuacao-moral"
