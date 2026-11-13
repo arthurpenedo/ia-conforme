@@ -41,7 +41,7 @@ def _aplica(f: Ficha, condicao: str | None) -> bool:
         return f.decisao != "nenhuma"
     if condicao == "publico_externo_ou_decisao":
         return f.publico != "interno" or f.decisao != "nenhuma"
-    return True
+    raise ValueError(f"condição desconhecida no checklist: {condicao!r}")
 
 
 def _atendido(f: Ficha, campo: str) -> bool:

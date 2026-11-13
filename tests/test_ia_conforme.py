@@ -169,3 +169,11 @@ def test_cli_erros(tmp_path, capsys):
     ruim = tmp_path / "ruim.toml"
     ruim.write_text('nome = "x"\n', encoding="utf-8")
     assert main(["avaliar", str(ruim)]) == 2
+
+
+def test_condicao_desconhecida_levanta_erro(monkeypatch):
+    from ia_conforme import checklist
+
+    monkeypatch.setattr(checklist, "CONTROLES", [("x", "descricao", {"alto"}, "inexistente")])
+    with pytest.raises(ValueError, match="condição desconhecida"):
+        checklist.montar(object(), "alto")
