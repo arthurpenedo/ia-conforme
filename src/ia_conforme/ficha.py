@@ -77,6 +77,8 @@ def carregar(caminho: str | Path) -> Ficha:
             bruto = tomllib.load(f)
         except tomllib.TOMLDecodeError as e:
             raise FichaInvalida(f"{caminho.name}: TOML inválido ({e})") from e
+        except UnicodeDecodeError as e:
+            raise FichaInvalida(f"{caminho.name}: arquivo não está em UTF-8 ({e.reason})") from e
     return de_dict(bruto, arquivo=caminho.name)
 
 

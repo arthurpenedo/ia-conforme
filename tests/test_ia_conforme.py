@@ -177,3 +177,14 @@ def test_condicao_desconhecida_levanta_erro(monkeypatch):
     monkeypatch.setattr(checklist, "CONTROLES", [("x", "descricao", {"alto"}, "inexistente")])
     with pytest.raises(ValueError, match="condição desconhecida"):
         checklist.montar(object(), "alto")
+
+
+def test_ficha_fora_de_utf8_vira_ficha_invalida(tmp_path):
+    import pytest
+
+    from ia_conforme.ficha import FichaInvalida, carregar
+
+    arq = tmp_path / "ruim.toml"
+    arq.write_bytes('nome = "café"\n'.encode("latin-1"))
+    with pytest.raises(FichaInvalida, match="UTF-8"):
+        carregar(arq)
