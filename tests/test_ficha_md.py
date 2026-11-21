@@ -18,3 +18,16 @@ def test_ficha_md_traz_titulo_finalidade_e_motivos():
 def test_ficha_md_sistema_de_risco_minimo_nao_vira_vedado():
     md = ficha_md(avaliar(_ficha()))
     assert "não colocar em produção" not in md
+
+
+def test_modelos_terceiros_precisa_ser_lista_de_textos():
+    import pytest
+
+    from ia_conforme.ficha import FichaInvalida, de_dict
+
+    base = {"nome": "x", "finalidade": "y"}
+    with pytest.raises(FichaInvalida, match="modelos_terceiros"):
+        de_dict({**base, "modelos_terceiros": "gpt"})
+    with pytest.raises(FichaInvalida, match="modelos_terceiros"):
+        de_dict({**base, "modelos_terceiros": [1]})
+    assert de_dict({**base, "modelos_terceiros": ["gpt"]}).modelos_terceiros == ["gpt"]

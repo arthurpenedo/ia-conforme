@@ -92,6 +92,9 @@ def de_dict(bruto: dict, arquivo: str = "") -> Ficha:
     for campo in _BOOLS:
         if campo in bruto and not isinstance(bruto[campo], bool):
             raise FichaInvalida(f"{arquivo or 'ficha'}: {campo} deve ser true ou false")
+    terceiros = bruto.get("modelos_terceiros", [])
+    if not isinstance(terceiros, list) or not all(isinstance(m, str) for m in terceiros):
+        raise FichaInvalida(f"{arquivo or 'ficha'}: modelos_terceiros deve ser uma lista de textos")
     ficha = Ficha(**{k: v for k, v in bruto.items() if k != "arquivo"}, arquivo=arquivo)
     _checar_enum("dominio", ficha.dominio, DOMINIOS)
     _checar_enum("decisao", ficha.decisao, DECISOES)
