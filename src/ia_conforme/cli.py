@@ -72,6 +72,7 @@ def main(argv: list[str] | None = None) -> int:
     avaliacoes = avaliar_todas(fichas)
     texto = relatorio_md(avaliacoes)
     if args.saida:
+        Path(args.saida).parent.mkdir(parents=True, exist_ok=True)  # pasta de saída ainda não existe
         Path(args.saida).write_text(texto, encoding="utf-8")
         print(f"relatório gravado em {args.saida}")
     else:

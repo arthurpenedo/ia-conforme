@@ -188,3 +188,9 @@ def test_ficha_fora_de_utf8_vira_ficha_invalida(tmp_path):
     arq.write_bytes('nome = "café"\n'.encode("latin-1"))
     with pytest.raises(FichaInvalida, match="UTF-8"):
         carregar(arq)
+
+
+def test_cli_saida_em_pasta_inexistente_cria_a_pasta(tmp_path):
+    saida = tmp_path / "novo" / "sub" / "r.md"
+    assert main(["avaliar", str(EXEMPLOS), "--saida", str(saida)]) == 0
+    assert saida.read_text(encoding="utf-8").strip()
