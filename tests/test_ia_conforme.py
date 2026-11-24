@@ -190,6 +190,11 @@ def test_ficha_fora_de_utf8_vira_ficha_invalida(tmp_path):
         carregar(arq)
 
 
+def test_cli_caminho_inexistente_diz_que_nao_existe(tmp_path, capsys):
+    assert main(["avaliar", str(tmp_path / "fichass")]) == 2
+    assert "caminho não existe" in capsys.readouterr().err
+
+
 def test_cli_saida_em_pasta_inexistente_cria_a_pasta(tmp_path):
     saida = tmp_path / "novo" / "sub" / "r.md"
     assert main(["avaliar", str(EXEMPLOS), "--saida", str(saida)]) == 0

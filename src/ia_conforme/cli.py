@@ -60,6 +60,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     alvo = Path(args.caminho)
+    if not alvo.exists():  # erro de digitação não pode parecer "pasta sem fichas"
+        print(f"erro: caminho não existe: {alvo}", file=sys.stderr)
+        return 2
     try:
         fichas = [carregar(alvo)] if alvo.is_file() else carregar_pasta(alvo)
     except (FichaInvalida, FileNotFoundError) as e:
