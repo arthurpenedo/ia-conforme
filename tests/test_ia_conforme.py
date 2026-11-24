@@ -199,3 +199,10 @@ def test_cli_saida_em_pasta_inexistente_cria_a_pasta(tmp_path):
     saida = tmp_path / "novo" / "sub" / "r.md"
     assert main(["avaliar", str(EXEMPLOS), "--saida", str(saida)]) == 0
     assert saida.read_text(encoding="utf-8").strip()
+
+
+def test_cli_saida_apontando_para_pasta_devolve_2(tmp_path, capsys):
+    assert main(["avaliar", str(EXEMPLOS), "--saida", str(tmp_path)]) == 2
+    assert "não consegui gravar" in capsys.readouterr().err
+    assert main(["demo", str(EXEMPLOS), "--saida", str(tmp_path)]) == 2
+    assert "não consegui gravar" in capsys.readouterr().err

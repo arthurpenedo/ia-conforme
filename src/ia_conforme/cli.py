@@ -29,6 +29,17 @@ base_legal_lgpd = false
 '''
 
 
+def _gravar(destino: Path, texto: str) -> bool:
+    """Grava criando a pasta; se o destino for uma pasta ou não der para gravar, avisa em vez de traceback."""
+    try:
+        destino.parent.mkdir(parents=True, exist_ok=True)  # pasta de saída ainda não existe
+        destino.write_text(texto, encoding="utf-8")
+    except OSError as e:
+        print(f"erro: não consegui gravar {destino}: {e}", file=sys.stderr)
+        return False
+    return True
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="ia-conforme", description=__doc__)
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -54,8 +65,8 @@ def main(argv: list[str] | None = None) -> int:
             print(f"erro: {e}", file=sys.stderr)
             return 2
         saida = Path(args.saida)
-        saida.parent.mkdir(parents=True, exist_ok=True)
-        saida.write_text(html, encoding="utf-8")
+        if not _gravar(saida, html):
+            return 2
         print(f"página gravada em {saida}")
         return 0
 
@@ -75,8 +86,8 @@ def main(argv: list[str] | None = None) -> int:
     avaliacoes = avaliar_todas(fichas)
     texto = relatorio_md(avaliacoes)
     if args.saida:
-        Path(args.saida).parent.mkdir(parents=True, exist_ok=True)  # pasta de saída ainda não existe
-        Path(args.saida).write_text(texto, encoding="utf-8")
+        if not _gravar(Path(args.saida), texto):
+            return 2
         print(f"relatório gravado em {args.saida}")
     else:
         sys.stdout.reconfigure(encoding="utf-8")
