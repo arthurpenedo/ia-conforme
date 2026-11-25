@@ -206,3 +206,11 @@ def test_cli_saida_apontando_para_pasta_devolve_2(tmp_path, capsys):
     assert "não consegui gravar" in capsys.readouterr().err
     assert main(["demo", str(EXEMPLOS), "--saida", str(tmp_path)]) == 2
     assert "não consegui gravar" in capsys.readouterr().err
+
+
+def test_cli_saida_dentro_de_arquivo_devolve_2_sem_traceback(tmp_path, capsys):
+    arq = tmp_path / "arq.txt"
+    arq.write_text("x", encoding="utf-8")
+    assert main(["avaliar", str(EXEMPLOS), "--saida", str(arq / "r.md")]) == 2
+    assert main(["demo", str(EXEMPLOS), "--saida", str(arq / "i.html")]) == 2
+    assert "não consegui gravar" in capsys.readouterr().err
